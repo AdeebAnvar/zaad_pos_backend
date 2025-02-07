@@ -43,6 +43,7 @@ const isExcludedUrl = (req) => {
     const excludedUrls = [
         '/user/login',
         '/user/add_user',
+        '/health',
 
     ]
 
