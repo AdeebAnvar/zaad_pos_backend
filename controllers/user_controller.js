@@ -56,6 +56,13 @@ exports.addUser = async (req, res) => {
 
     try {
         const startTime = Date.now();
+        try {
+            const [result] = await db.query('SELECT 1');
+            console.log('Database connection successful:', result);
+          } catch (error) {
+            console.error('Database connection failed:', error);
+          }
+
         const [rows] = await db.query('CALL login(?, ?)', [username, password]);
         const duration = Date.now() - startTime;
         console.log(`DB query took ${duration} ms`);
