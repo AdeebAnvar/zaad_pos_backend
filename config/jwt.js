@@ -40,6 +40,8 @@ function authJwt() {
 const authMiddleware = authJwt()
 
 const isExcludedUrl = (req) => {
+    console.log('Incoming request:', req.path, req.method);
+
     const excludedUrls = [
         '/user/login',
         '/user/add_user',
