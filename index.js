@@ -1,12 +1,12 @@
 const express = require('express');
 const axios = require('axios'); // Ensure axios is installed: npm install axios
-
+require('dotenv').config();
 const app = express();
 const userRoutes = require('./routes/user_routes');
 const itemRoutes = require('./routes/item_routes');
 const authJwt = require('./config/jwt');
 
-const port = 3000;
+const port = process.env.DB_PORT|| 3000;
 
 // Middleware
 app.use(express.json());
@@ -33,5 +33,5 @@ setInterval(async () => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at ${process.env.DB_HOST}:${port}`);
 });
