@@ -29,7 +29,7 @@ setInterval(async () => {
   } catch (error) {
     console.error('Error calling API:', error.message);
   }
-}, 10000);
+}, 15000);
 
 // Start the server
 app.listen(port, () => {
