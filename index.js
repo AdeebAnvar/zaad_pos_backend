@@ -12,6 +12,10 @@ const port = 3000;
 app.use(express.json());
 app.use(authJwt);
 
+// Routes
+app.use('/user', userRoutes);
+app.use('/item', itemRoutes);
+
 // Health Check Route
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
@@ -26,10 +30,6 @@ setInterval(async () => {
     console.error('Error calling API:', error.message);
   }
 }, 10000);
-
-// Routes
-app.use('/user', userRoutes);
-app.use('/item', itemRoutes);
 
 // Start the server
 app.listen(port, () => {
