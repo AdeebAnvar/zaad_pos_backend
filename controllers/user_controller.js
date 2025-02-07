@@ -42,10 +42,9 @@ exports.addUser = async (req, res) => {
             message: 'Internal Server Error', error
         });
     }
-};
-exports.login = async (req, res) => {
+};exports.login = async (req, res) => {
     const { username, password } = req.body;
-console.log(username);
+    console.log('Login request received for:', username);
     if (!username || !password) {
         return res.status(400).json({
             status: false,
@@ -54,13 +53,22 @@ console.log(username);
     }
 
     try {
+        const startTime = Date.now();
         const [rows] = await db.query('CALL login(?, ?)', [username, password]);
+        const duration = Date.now() - startTime;
+        console.log(`DB query took ${duration} ms`);
+        
         if (rows[0].length === 0) {
             return res.status(401).json({ message: 'Invalid username or password.' });
         }
         const user = rows[0][0]; // First row contains the user data
-        // const isPasswordValid = await bcrypt.compare(password, user.password);
-        const token = jwt.sign({ id: user.id, username: user.name, password: user.password }, JWT_SECRET, { expiresIn: '10h' });
+        
+        // Generate JWT token (consider not including the password in the token)
+        const token = jwt.sign(
+            { id: user.id, username: user.name },
+            process.env.SECRET_KEY,
+            { expiresIn: '10h' }
+        );
 
         return res.status(200).json({
             message: 'Login successful',
@@ -68,6 +76,7 @@ console.log(username);
             token
         });
     } catch (error) {
+        console.error('Error in login route:', error);
         return res.status(500).json({
             status: false,
             message: 'Internal Server Error',
