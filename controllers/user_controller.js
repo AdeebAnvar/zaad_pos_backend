@@ -45,7 +45,7 @@ exports.addUser = async (req, res) => {
 };
 exports.login = async (req, res) => {
     const { username, password } = req.body;
-
+console.log(username);
     if (!username || !password) {
         return res.status(400).json({
             status: false,
