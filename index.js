@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
 // Call the health check endpoint every 10 seconds to keep the server alive
 setInterval(async () => {
   try {
-    const response = await axios.get('http://localhost:3000/health'); // Use full URL
+    const response = await axios.get('https://zaad-pos-backend.onrender.com/health'); // Use full URL
     console.log('API called successfully:', response.data);
   } catch (error) {
     console.error('Error calling API:', error.message);
