@@ -3,7 +3,7 @@ const axios = require('axios'); // Ensure axios is installed: npm install axios
 require('dotenv').config();
 const app = express();
 const userRoutes = require('./routes/user_routes');
-const itemRoutes = require('./routes/item_routes');
+const productRoutes = require('./routes/product_routes');
 const authJwt = require('./config/jwt');
 
 const port = process.env.DB_PORT|| 3000;
@@ -14,7 +14,7 @@ app.use(authJwt);
 
 // Routes
 app.use('/user', userRoutes);
-app.use('/item', itemRoutes);
+app.use('/product', productRoutes);
 
 // Health Check Route
 app.get('/health', (req, res) => {
