@@ -5,12 +5,14 @@ const app = express();
 const userRoutes = require('./routes/user_routes');
 const productRoutes = require('./routes/product_routes');
 const authJwt = require('./config/jwt');
+const cors = require('cors');
 
 const port = process.env.DB_PORT|| 3000;
 
 // Middleware
 app.use(express.json());
 app.use(authJwt);
+app.use(cors()); // Enable CORS for all routes
 
 // Routes
 app.use('/user', userRoutes);
