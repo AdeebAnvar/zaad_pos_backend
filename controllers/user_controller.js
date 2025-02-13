@@ -5,10 +5,10 @@ const JWT_SECRET = process.env.SECRET_KEY;
 exports.getAllUsers = async (req, res) => {
     try {
         const [rows] = await db.query('CALL GetAllUsers()');  // Call the stored procedure
-        res.status(200).json({ success: true, data: rows[0] });
+        res.status(200).json({ status: true, data: rows[0] });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ success: false, message: 'Server Error' });
+        res.status(500).json({ status: false, message: 'Server Error' });
     }
 };
 exports.addUser = async (req, res) => {
@@ -42,7 +42,8 @@ exports.addUser = async (req, res) => {
             message: 'Internal Server Error', error
         });
     }
-};exports.login = async (req, res) => {
+};
+ exports.login = async (req, res) => {
     const { username, password } = req.body;
     console.log('Login request received for:', username);
     // const [roe]=  await db.query('SELECT 1');
@@ -56,22 +57,19 @@ exports.addUser = async (req, res) => {
 
     try {
         const startTime = Date.now();
-        try {
-            const [result] = await db.query('SELECT 1');
-            console.log('Database connection successful:', result);
-          } catch (error) {
-            console.error('Database connection failed:', error);
-          }
 
         const [rows] = await db.query('CALL login(?, ?)', [username, password]);
         const duration = Date.now() - startTime;
         console.log(`DB query took ${duration} ms`);
-        
+
         if (rows[0].length === 0) {
-            return res.status(401).json({ message: 'Invalid username or password.' });
+            return res.status(401).json({
+                status: false,
+                message: 'Invalid username or password.'
+            });
         }
         const user = rows[0][0]; // First row contains the user data
-        
+
         // Generate JWT token (consider not including the password in the token)
         const token = jwt.sign(
             { id: user.id, username: user.name },
@@ -80,9 +78,11 @@ exports.addUser = async (req, res) => {
         );
 
         return res.status(200).json({
+            status: true,
             message: 'Login successful',
             user: user,
             token
+
         });
     } catch (error) {
         console.error('Error in login route:', error);
