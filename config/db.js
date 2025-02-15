@@ -15,12 +15,13 @@ const pool = mysql.createPool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: process.env.DB_PORT||3001,
-  ssl: { rejectUnauthorized: false }  // Important for Aiven SSL connection
-  , connectTimeout: 30000,           // Increase to 30000 ms (30 seconds)
+  port: process.env.DB_PORT || 3001,
+  ssl: { rejectUnauthorized: false },
+  connectTimeout: 30000,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+decimalNumbers:true
 });
 
 module.exports = pool.promise();
