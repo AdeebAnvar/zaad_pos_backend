@@ -44,12 +44,13 @@ exports.addUser = async (req, res) => {
     }
 };
  exports.login = async (req, res) => {
+    console.log("fgdegf")
     const { username, password } = req.body;
     console.log('Login request received for:', username);
     // const [roe]=  await db.query('SELECT 1');
     // console.log('roe:', roe);
     if (!username || !password) {
-        return res.status(400).json({
+        return res.status(200).json({
             status: false,
             message: 'Username and password are mandatory.'
         });
@@ -63,7 +64,7 @@ exports.addUser = async (req, res) => {
         console.log(`DB query took ${duration} ms`);
 
         if (rows[0].length === 0) {
-            return res.status(400).json({
+            return res.status(200).json({
                 status: false,
                 message: 'Invalid username or password.'
             });
