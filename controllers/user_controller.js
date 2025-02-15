@@ -63,7 +63,7 @@ exports.addUser = async (req, res) => {
         console.log(`DB query took ${duration} ms`);
 
         if (rows[0].length === 0) {
-            return res.status(401).json({
+            return res.status(400).json({
                 status: false,
                 message: 'Invalid username or password.'
             });
