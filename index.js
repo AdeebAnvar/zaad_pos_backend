@@ -4,6 +4,7 @@ require('dotenv').config();
 const app = express();
 const userRoutes = require('./routes/user_routes');
 const productRoutes = require('./routes/product_routes');
+const customerRoutes = require('./routes/customer_routes');
 const authJwt = require('./config/jwt');
 const cors = require('cors');
 
@@ -17,6 +18,7 @@ app.use(authJwt);
 // Routes
 app.use('/user', userRoutes);
 app.use('/product', productRoutes);
+app.use('/customer',customerRoutes );
 
 // Health Check Route
 app.get('/health', (req, res) => {
