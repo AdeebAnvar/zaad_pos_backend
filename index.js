@@ -5,6 +5,7 @@ const app = express();
 const userRoutes = require('./routes/user_routes');
 const productRoutes = require('./routes/product_routes');
 const customerRoutes = require('./routes/customer_routes');
+const orderRoutes = require('./routes/order_routes');
 const authJwt = require('./config/jwt');
 const cors = require('cors');
 
@@ -19,6 +20,7 @@ app.use(authJwt);
 app.use('/user', userRoutes);
 app.use('/product', productRoutes);
 app.use('/customer',customerRoutes );
+app.use('/order',orderRoutes );
 
 // Health Check Route
 app.get('/health', (req, res) => {
@@ -29,7 +31,7 @@ app.get('/health', (req, res) => {
 setInterval(async () => {
   try {
     const response = await axios.get('https://zaad-pos-backend.onrender.com/health'); // Use full URL
-    console.log('API called successfully:', response.data);
+    // console.log('API called successfully:', response.data);
   } catch (error) {
     console.error('Error calling API:', error.message);
   }
