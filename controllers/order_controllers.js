@@ -2,7 +2,7 @@ const db = require('../config/db')
 
 exports.saveOrder = async (req, res) => {
     const { customerId, cardAmount, cashAmount, paymentMethod, grossTotal, discount, netTotal, orderItems } = req.body;
-    if (!customerId || !cardAmount || !cashAmount || !paymentMethod || !grossTotal || !discount || !netTotal || !Array.isArray(orderItems)) {
+    if (!customerId || cardAmount === null || cashAmount === null || !paymentMethod || grossTotal === null || discount === null || netTotal === null || !Array.isArray(orderItems)) {
         return res.status(200).json({
             status: false,
             message: "Mandatory fields are missing"
@@ -20,12 +20,13 @@ exports.saveOrder = async (req, res) => {
             message: "Order Created Successfully",
             data: rows[0]
         })
-    } catch (error) {  if (error.code === 'ER_SIGNAL_EXCEPTION') {
-        return res.status(400).json({
-            status: false,
-            message: error.message
-        });
-    }
+    } catch (error) {
+        if (error.code === 'ER_SIGNAL_EXCEPTION') {
+            return res.status(400).json({
+                status: false,
+                message: error.message
+            });
+        }
         return res.status(500).json({
             status: false,
             message: error
@@ -52,7 +53,7 @@ exports.getOrderByCustomer = async (req, res) => {
             data: rows[0]
         });
     } catch (error) {
-      
+
         return res.status(500).json({
             status: false,
             message: error
