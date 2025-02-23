@@ -61,6 +61,24 @@ exports.getOrderByCustomer = async (req, res) => {
 
     }
 }
+exports.getAllOrders = async (req, res) => {
+    try {
+        const [rows] = await db.query('call getAllOrders()')
+
+        return res.status(200).json({
+            status: true,
+            message: 'orders fetched successfully',
+            data: rows[0]
+        })
+
+    } catch (error) {
+
+        return res.status(500).json({
+            status: false,
+            message: error
+        })
+    }
+}
 
 const generateReceiptNumber = () => {
     const date = new Date();
