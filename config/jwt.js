@@ -46,7 +46,7 @@ const isExcludedUrl = (req) => {
         '/user/login',
         '/user/add_user',
         '/health',
-        '/submitData',
+        'customer/submitData',
 
     ]
 
