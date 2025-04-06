@@ -64,7 +64,12 @@ exports.submitData = async (req, res) => {
     try {
         const [name,email,message,donationMethod] =req.body;
         console.log(`name ${name} email ${email} message ${message} option ${donationMethod}` )
-        
+        return res.status(200).json({
+            "name":name,
+            "email":email,
+            "option":donationMethod,
+            "message":message,
+        })
     } catch (error) {
         console.error("Database Error:", error);
         return res.status(500).json({
