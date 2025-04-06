@@ -60,3 +60,17 @@ exports.getAllCustomers = async (req, res) => {
         });
     }
 };
+exports.submitData = async (req, res) => {
+    try {
+        const [name,email,message,option] =req.body;
+        console.log(`name ${name} email ${email} message ${message} option ${option}` )
+        
+    } catch (error) {
+        console.error("Database Error:", error);
+        return res.status(500).json({
+            status: false,
+            message: "Failed to fetch customers",
+            error: error.message
+        });
+    }
+};
