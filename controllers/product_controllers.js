@@ -96,8 +96,8 @@ exports.deleteCategory = async (req, res) => {
 };
 
 exports.saveProduct = async (req, res) => {
-    const { product_id, product_name, product_category_name_eng, product_category_name_arabic, product_category_id, unit_price, discount_price } = req.body;
-    if (!product_name || !product_category_name_eng || !product_category_name_arabic || !product_category_id || !unit_price || !discount_price) {
+    const { product_id, product_name,product_image, product_category_name_eng, product_category_name_arabic, product_category_id, unit_price, discount_price } = req.body;
+    if (!product_name ||!product_image|| !product_category_name_eng || !product_category_name_arabic || !product_category_id || !unit_price || !discount_price) {
         return res.status(400).json({
             status: false,
             message: "Missing mandatory fields"
@@ -106,7 +106,7 @@ exports.saveProduct = async (req, res) => {
     }
 
     try {
-        const [rows] = await db.query('call saveProduct(?,?,?,?,?,?,?)', [product_id, product_name, product_category_name_eng, product_category_name_arabic, product_category_id, unit_price, discount_price])
+        const [rows] = await db.query('call saveProduct(?,?,?,?,?,?,?,?)', [product_id, product_name,product_image, product_category_name_eng, product_category_name_arabic, product_category_id, unit_price, discount_price])
         const message = product_id == 0 || product_id == null ? 'Product added successfully' : 'Product updated successfully';
         console.log(rows);
         return res.status(200).json({
