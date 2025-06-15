@@ -38,26 +38,22 @@ function authJwt() {
 }
 
 const authMiddleware = authJwt()
-
 const isExcludedUrl = (req) => {
     console.log('Incoming request:', req.path, req.method);
-
+  
     const excludedUrls = [
-        '/user/login',
-        '/user/add_user',
-        '/health',
-        '/customer/submitData',
-
-    ]
-
-    const isExcluded = excludedUrls.some((url) => {
-        if (url.endsWith('/')) {
-            return req.path.startsWith(url);
-        } else {
-            return req.path == url;
-        }
-    })
-
-    return isExcluded;
-}
+      '/user/login',
+      '/user/add_user',
+      '/health',
+      '/customer/submitData',
+    ];
+  
+    // Special handling for uploads
+    if (req.path.startsWith('/uploads/')) {
+      return true;
+    }
+  
+    return excludedUrls.includes(req.path);
+  };
+  
 module.exports = authMiddleware.unless({ custom: isExcludedUrl });

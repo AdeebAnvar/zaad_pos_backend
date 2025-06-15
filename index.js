@@ -6,6 +6,7 @@ const userRoutes = require('./routes/user_routes');
 const productRoutes = require('./routes/product_routes');
 const customerRoutes = require('./routes/customer_routes');
 const orderRoutes = require('./routes/order_routes');
+const branchRoutes = require('./routes/branch_routes');
 const authJwt = require('./config/jwt');
 const cors = require('cors');
 
@@ -21,6 +22,8 @@ app.use('/user', userRoutes);
 app.use('/product', productRoutes);
 app.use('/customer',customerRoutes );
 app.use('/order',orderRoutes );
+app.use('/branch',branchRoutes );
+app.use('/uploads', express.static('uploads'));
 
 // Health Check Route
 app.get('/health', (req, res) => {
